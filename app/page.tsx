@@ -1,8 +1,8 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
-import { CheckCircle, Calendar, BookOpen, HelpCircle, Users, FileText } from "lucide-react"
+import { motion } from "framer-motion"
+import { CheckCircle, Calendar, BookOpen, HelpCircle, FileText } from "lucide-react"
 import Image from "next/image"
 
 interface ModuleProgress {
@@ -12,6 +12,17 @@ interface ModuleProgress {
 interface User {
   name: string
   isLoggedIn: boolean
+}
+
+interface ProgressParams {
+  autoplay: boolean
+  muted: boolean
+  saveProgress: boolean
+  hideControls: boolean
+  restartAfterEnd: boolean
+  showCaptions: boolean
+  allowSkip: boolean
+  trackTime: boolean
 }
 
 export default function LearningPlatform() {
@@ -27,6 +38,17 @@ export default function LearningPlatform() {
     "8": 0,
   })
 
+  const [progressParams, setProgressParams] = useState<ProgressParams>({
+    autoplay: true,
+    muted: false,
+    saveProgress: true,
+    hideControls: false,
+    restartAfterEnd: true,
+    showCaptions: true,
+    allowSkip: false,
+    trackTime: true,
+  })
+
   // Simulate user login
   useEffect(() => {
     // In a real app, this would come from authentication
@@ -39,56 +61,56 @@ export default function LearningPlatform() {
       id: "1",
       title: "Módulo 1",
       subtitle: "Fundamentos de IA generativa",
-      image: "/images/ai-fundamentals-new.png",
+      image: "/images/ai-fundamentals-premium.jpg", // Updated to new premium gradient image
       duration: "16h",
     },
     {
       id: "2",
       title: "Módulo 2",
       subtitle: "Governança e risco",
-      image: "/images/governance-risk.png",
+      image: "/images/governance-risk-new.jpg", // Updated to use new custom gradient image
       duration: "16h",
     },
     {
       id: "3",
       title: "Módulo 3",
       subtitle: "Possibilidades tecnológicas",
-      image: "/images/tech-possibilities-new.png",
+      image: "/images/tech-possibilities-premium.jpg", // Updated to new premium gradient image
       duration: "16h",
     },
     {
       id: "4",
       title: "Módulo 4",
       subtitle: "Engenharia de prompts e padrões de saída",
-      image: "/images/prompt-engineering.png",
+      image: "/images/prompt-engineering-new.jpg", // Updated to use new custom gradient image
       duration: "16h",
     },
     {
       id: "5",
       title: "Módulo 5",
       subtitle: "Agentes e automação de workflow",
-      image: "/images/ai-agents-automation-gradient.jpg",
+      image: "/images/ai-agents-premium.jpg", // Updated to new premium gradient image
       duration: "16h",
     },
     {
       id: "6",
       title: "Módulo 6",
       subtitle: "IA no ecossistema corporativo",
-      image: "/images/corporate-ecosystem-gradient.jpg",
+      image: "/images/corporate-ecosystem-premium.jpg", // Updated to new premium gradient image
       duration: "16h",
     },
     {
       id: "7",
       title: "Módulo 7",
       subtitle: "Confiabilidade, vieses e segurança",
-      image: "/images/reliability-security-gradient.jpg",
+      image: "/images/ai-security-premium.jpg", // Updated to new premium gradient image
       duration: "16h",
     },
     {
       id: "8",
       title: "Módulo 8",
       subtitle: "Produtividade e colaboração com IA",
-      image: "/images/productivity-collaboration-gradient.jpg",
+      image: "/images/ai-productivity-premium.jpg", // Updated to new premium gradient image
       duration: "16h",
     },
   ]
@@ -97,7 +119,6 @@ export default function LearningPlatform() {
     { name: "Calendário", icon: Calendar, image: "/calendar-icon.png" },
     { name: "Exercícios Extras", icon: BookOpen, image: "/exercises-book-icon.jpg" },
     { name: "Tire Suas Dúvidas Aqui", icon: HelpCircle, image: "/help-support-icon.png" },
-    { name: "Frequência de Chamada", icon: Users, image: "/attendance-frequency-icon.jpg" },
     { name: "Pesquisa Institucional", icon: FileText, image: "/institutional-survey-icon.jpg" },
   ]
 
@@ -112,7 +133,6 @@ export default function LearningPlatform() {
       return
     }
 
-    // Simulate viewing activities and updating progress
     const currentProgress = progress[moduleId]
     if (currentProgress < 100) {
       const newProgress = Math.min(currentProgress + 25, 100)
@@ -120,6 +140,14 @@ export default function LearningPlatform() {
         ...prev,
         [moduleId]: newProgress,
       }))
+
+      // Log progress parameters for debugging
+      console.log(`[v0] Module ${moduleId} progress updated with params:`, {
+        progress: newProgress,
+        autoplay: progressParams.autoplay,
+        saveProgress: progressParams.saveProgress,
+        trackTime: progressParams.trackTime,
+      })
     }
   }
 
@@ -128,7 +156,7 @@ export default function LearningPlatform() {
   return (
     <div className="min-h-screen bg-gray-100 font-sans">
       {/* Hero Section */}
-      <section className="bg-gray-100 py-16 md:py-24 px-4 md:px-8">
+      <section className="bg-gray-200 py-16 md:py-24 px-4 md:px-8">
         <div className="container mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between">
           <div className="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
             <motion.h2
@@ -205,76 +233,53 @@ export default function LearningPlatform() {
                   onClick={() => handleModuleClick(module.id)}
                   style={{ cursor: !isUnlocked ? "not-allowed" : "pointer" }}
                 >
-                  <motion.div
-                    className="absolute top-4 right-4 z-10"
-                    animate={
-                      isUnlocked
-                        ? {
-                            rotate: 0,
-                            scale: 1,
-                          }
-                        : {}
-                    }
-                    transition={{ duration: 0.3 }}
-                  >
-                    <AnimatePresence mode="wait">
-                      {isCompleted ? (
-                        <motion.div
-                          key="completed"
-                          initial={{ scale: 0, rotate: -180 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          exit={{ scale: 0, rotate: 180 }}
-                          transition={{ duration: 0.4 }}
-                        >
-                          <CheckCircle className="w-6 h-6 text-green-500" />
-                        </motion.div>
-                      ) : !isUnlocked ? (
-                        <motion.div
-                          key="locked"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                          transition={{ duration: 0.3 }}
-                        >
-                          <Image
-                            src="/images/padlock-blue.png"
-                            alt="Locked"
-                            width={24}
-                            height={24}
-                            className="w-6 h-6 filter brightness-0 saturate-100 invert-0 hue-rotate-180 contrast-200"
-                            style={{
-                              filter:
-                                "brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%)",
-                            }}
-                          />
-                        </motion.div>
-                      ) : (
-                        <motion.div
-                          key="unlocked"
-                          initial={{ scale: 0, rotate: -90 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          exit={{ scale: 0, rotate: 90 }}
-                          transition={{ duration: 0.3 }}
-                          whileHover={{
-                            rotate: [0, 15, -15, 0],
-                            transition: { duration: 0.5 },
+                  <div className="absolute top-4 right-4 z-10">
+                    {isCompleted ? (
+                      <motion.div
+                        initial={{ scale: 0, rotate: -180 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ duration: 0.4 }}
+                      >
+                        <CheckCircle className="w-6 h-6 text-green-500" />
+                      </motion.div>
+                    ) : !isUnlocked ? (
+                      <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.3 }}>
+                        <Image
+                          src="/images/padlock-blue.png"
+                          alt="Locked"
+                          width={24}
+                          height={24}
+                          className="w-6 h-6"
+                          style={{
+                            filter:
+                              "brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%)",
                           }}
-                        >
-                          <Image
-                            src="/images/padlock-blue.png"
-                            alt="Unlocked"
-                            width={24}
-                            height={24}
-                            className="w-6 h-6 opacity-50"
-                            style={{
-                              filter:
-                                "brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%)",
-                            }}
-                          />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </motion.div>
+                        />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        initial={{ scale: 0, rotate: -90 }}
+                        animate={{ scale: 1, rotate: 0 }}
+                        transition={{ duration: 0.3 }}
+                        whileHover={{
+                          rotate: [0, 15, -15, 0],
+                          transition: { duration: 0.5 },
+                        }}
+                      >
+                        <Image
+                          src="/images/padlock-unlocked.png"
+                          alt="Unlocked"
+                          width={24}
+                          height={24}
+                          className="w-6 h-6"
+                          style={{
+                            filter:
+                              "brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%)",
+                          }}
+                        />
+                      </motion.div>
+                    )}
+                  </div>
 
                   {/* Module Image */}
                   <div className="mb-4">
@@ -312,6 +317,14 @@ export default function LearningPlatform() {
                         initial={{ width: 0 }}
                         animate={{ width: `${moduleProgress}%` }}
                         transition={{ duration: 1, delay: index * 0.1 }}
+                        data-autoplay={progressParams.autoplay}
+                        data-muted={progressParams.muted}
+                        data-save-progress={progressParams.saveProgress}
+                        data-hide-controls={progressParams.hideControls}
+                        data-restart-after-end={progressParams.restartAfterEnd}
+                        data-show-captions={progressParams.showCaptions}
+                        data-allow-skip={progressParams.allowSkip}
+                        data-track-time={progressParams.trackTime}
                       />
                     </div>
                   </div>
@@ -334,7 +347,7 @@ export default function LearningPlatform() {
             Seções Adicionais
           </motion.h3>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center justify-items-center">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center justify-items-center">
             {additionalSections.map((section, index) => {
               const isLocked = section.name === "Pesquisa Institucional" && !allModulesCompleted
 
