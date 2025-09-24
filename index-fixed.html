@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIEC +IA - Plataforma de Aprendizado</title>
+     Using local Tailwind CSS instead of CDN for better VS Code compatibility 
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Added fallback styles for when Tailwind doesn't load */
+        .fallback-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .fallback-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .fallback-card { background: white; padding: 24px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .fallback-blue { color: #2563eb; }
+        .fallback-gray { color: #6b7280; }
+        
+        .progress-bar {
+            transition: width 1s ease-in-out;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .card-locked {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .card-locked:hover {
+            transform: none;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+        .stagger-6 { animation-delay: 0.6s; }
+        .stagger-7 { animation-delay: 0.7s; }
+        .stagger-8 { animation-delay: 0.8s; }
+    </style>
+</head>
+<body class="min-h-screen bg-gray-100 font-sans">
+     Hero Section 
+    <section class="bg-gray-100 py-16 md:py-24 px-4 md:px-8">
+        <div class="container mx-auto max-w-7xl flex flex-col md:flex-row items-center justify-between fallback-container">
+            <div class="md:w-1/2 text-center md:text-left mb-8 md:mb-0">
+                <h2 class="text-4xl md:text-6xl font-extrabold text-blue-600 mb-4 fade-in fallback-blue">
+                    Bem-vindo(a) ao seu espaço de aprendizado, <span id="username">Maria Silva</span>!
+                </h2>
+                <p class="text-lg md:text-xl text-gray-700 mb-6 fade-in stagger-1 fallback-gray">
+                    Aqui você pode acompanhar seu progresso na FIEC +IA.
+                </p>
+            </div>
+            <div class="md:w-1/2 flex justify-center fade-in stagger-2">
+                 Using relative path for better compatibility 
+                <img src="./public/images/fiec-ia-logo.png" alt="FIEC +IA Logo" class="w-full max-w-lg" style="max-width: 400px;">
+            </div>
+        </div>
+    </section>
+
+     Learning Path 
+    <section class="py-12 px-4 md:px-8">
+        <div class="container mx-auto max-w-7xl fallback-container">
+            <h3 class="text-3xl md:text-4xl font-bold text-center mb-4 text-blue-600 fade-in fallback-blue">
+                Programa Online IndustrIA Tech
+            </h3>
+            <p class="text-center text-gray-600 mb-8 fade-in stagger-1 fallback-gray">
+                16h de conteúdo gravado (mesmo conteúdo para as trilhas Tática e Operacional)
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 fallback-grid">
+                 Módulo 1 
+                <div class="relative bg-white p-6 rounded-xl shadow-md transition-all duration-300 card-hover cursor-pointer fade-in stagger-1 fallback-card" onclick="handleModuleClick('1')">
+                    <div class="absolute top-4 right-4 z-10">
+                        <svg class="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                        </svg>
+                    </div>
+                    <div class="mb-4">
+                         Using relative path for images 
+                        <img src="./public/images/ai-fundamentals-new.png" alt="Fundamentos da IA Generativa" class="rounded-lg w-full h-32 object-cover">
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-2 text-center text-blue-600 fallback-blue">Módulo 1</h4>
+                    <p class="text-gray-600 text-center mb-4 fallback-gray">Fundamentos de IA generativa</p>
+                    <div class="mt-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600 font-medium fallback-gray">16h</span>
+                            <span class="text-sm font-bold text-green-600">100% Concluído</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="h-2 rounded-full bg-green-500 progress-bar" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                 Módulo 2 
+                <div class="relative bg-white p-6 rounded-xl shadow-md transition-all duration-300 card-hover cursor-pointer fade-in stagger-2 fallback-card" onclick="handleModuleClick('2')">
+                    <div class="absolute top-4 right-4 z-10">
+                        <img src="./public/images/padlock-unlocked.png" alt="Unlocked" class="w-6 h-6" style="filter: brightness(0) saturate(100%) invert(27%) sepia(51%) saturate(2878%) hue-rotate(346deg) brightness(104%) contrast(97%);">
+                    </div>
+                    <div class="mb-4">
+                        <img src="./public/images/governance-risk.png" alt="Governança e Risco" class="rounded-lg w-full h-32 object-cover">
+                    </div>
+                    <h4 class="text-2xl font-semibold mb-2 text-center text-blue-600 fallback-blue">Módulo 2</h4>
+                    <p class="text-gray-600 text-center mb-4 fallback-gray">Governança e risco</p>
+                    <div class="mt-4">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-sm text-gray-600 font-medium fallback-gray">16h</span>
+                            <span class="text-sm font-bold text-blue-600 fallback-blue">0% Concluído</span>
+                        </div>
+                        <div class="w-full bg-gray-200 rounded-full h-2">
+                            <div class="h-2 rounded-full bg-blue-600 progress-bar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+     Additional Sections 
+    <section class="py-12 px-4 md:px-8 bg-gray-200">
+        <div class="container mx-auto max-w-7xl fallback-container">
+            <h3 class="text-3xl md:text-4xl font-bold text-center mb-8 text-blue-600 fade-in fallback-blue">
+                Seções Adicionais
+            </h3>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 text-center justify-items-center fallback-grid">
+                 Added proper icons and fixed paths for additional sections 
+                 Calendário 
+                <div class="w-full max-w-xs bg-white p-6 rounded-xl shadow-md transition-all duration-300 flex flex-col items-center card-hover cursor-pointer fade-in stagger-1 fallback-card">
+                    <div class="relative mb-4">
+                        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="text-lg font-bold text-blue-600 fallback-blue">Calendário</span>
+                </div>
+
+                 Exercícios Extras 
+                <div class="w-full max-w-xs bg-white p-6 rounded-xl shadow-md transition-all duration-300 flex flex-col items-center card-hover cursor-pointer fade-in stagger-2 fallback-card">
+                    <div class="relative mb-4">
+                        <div class="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <span class="text-lg font-bold text-blue-600 fallback-blue">Exercícios Extras</span>
+                </div>
+
+
+            </div>
+        </div>
+    </section>
+
+
+</body>
+</html>
